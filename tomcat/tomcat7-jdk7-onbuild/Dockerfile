@@ -19,7 +19,7 @@ LABEL name="Debian Base Image" \
 
 VOLUME $CATALINA_BASE
 
-CMD ["$CATALINA_HOME/bin/catalina.sh", "run"]
+CMD ["/usr/share/tomcat7/bin/catalina.sh", "run"]
 
 ONBUILD COPY *.war $CATALINA_BASE/webapps/
 ONBUILD COPY *.xml /etc/tomcat7/Catalina/localhost/
