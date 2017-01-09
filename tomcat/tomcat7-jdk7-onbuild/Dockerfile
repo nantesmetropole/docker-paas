@@ -7,6 +7,7 @@ RUN apt-get update && \
         libtcnative-1 \
         openjdk-7-jre-headless \
         tomcat7 \
+    && \
     cp -a /etc/tomcat7/server.xml /etc/tomcat7/server.xml.orig && \
     cat /etc/tomcat7/server.xml.orig \
         | perl -0777 -pe 's/([ \t]*<!--\n?)(\s+<Connector port="8009"[^>]+>\n?)(\s+-->\n?)/\2/' \
