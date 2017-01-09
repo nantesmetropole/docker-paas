@@ -1,0 +1,16 @@
+language: generic
+sudo: required
+services:
+  - docker
+
+env:
+    matrix:
+        - DIST=wheezy JAVA_VERSION=6 TOMCAT_VERSION=6
+        - DIST=wheezy JAVA_VERSION=6 TOMCAT_VERSION=7
+        - DIST=wheezy JAVA_VERSION=7 TOMCAT_VERSION=6
+        - DIST=jessie JAVA_VERSION=7 TOMCAT_VERSION=7
+        - DIST=jessie JAVA_VERSION=7 TOMCAT_VERSION=8
+        - DIST=stretch JAVA_VERSION=8 TOMCAT_VERSION=8.5
+
+script:
+    - ./build.sh tomcat
