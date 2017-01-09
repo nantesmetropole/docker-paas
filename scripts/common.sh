@@ -66,6 +66,7 @@ EOF
     for p in $(echo $dockerfile_packages | tr " " "\n" | sort) ; do
         dockerfile_generate_line "        $p \\"
     done
+    dockerfile_generate_line "    && rm -rf /var/lib/apt/lists/* && \\"
     dockerfile_generate_run_cont
     if [ -n "$onbuild_short" ]; then
         dockerfile_generate_onbuild
@@ -73,8 +74,8 @@ EOF
 }
 
 dockerfile_generate_run_cont() {
-    echo -n
-}
+   dockerfile_generate_line "        echo Done"
+ }
 
 dockerfile_generate_onbuild() {
     echo -n

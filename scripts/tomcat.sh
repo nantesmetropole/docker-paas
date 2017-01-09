@@ -47,7 +47,6 @@ dockerfile_from=nantesmetropole/debian:$DIST
 
 dockerfile_generate_run_cont() {
     cat <<EOF >> "$dockerfile_path"
-    && \\
     cp -a /etc/$tomcat_package/server.xml /etc/$tomcat_package/server.xml.orig && \\
     cat /etc/$tomcat_package/server.xml.orig \\
         | perl -0777 -pe 's/([ \t]*<!--\n?)(\s+<Connector port="8009"[^>]+>\n?)(\s+-->\n?)/\2/' \\

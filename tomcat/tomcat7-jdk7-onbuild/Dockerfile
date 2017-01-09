@@ -7,13 +7,13 @@ RUN apt-get update && \
         libtcnative-1 \
         openjdk-7-jre-headless \
         tomcat7 \
-    && \
+    && rm -rf /var/lib/apt/lists/* && \
     cp -a /etc/tomcat7/server.xml /etc/tomcat7/server.xml.orig && \
     cat /etc/tomcat7/server.xml.orig \
         | perl -0777 -pe 's/([ \t]*<!--\n?)(\s+<Connector port="8009"[^>]+>\n?)(\s+-->\n?)/\2/' \
         | perl -0777 -pe 's/([ \t]*<!--\n?)(\s+<Listener className="org.apache.catalina.core.AprLifecycleListener"[^>]+>\n?)(\s+-->\n?)/\2/' \
         > /etc/tomcat7/server.xml && \
-    diff -u /etc/tomcat7/server.xml.orig /etc/tomcat7/server.xml
+    diff -u /etc/tomcat7/server.xml.orig /etc/tomcat7/server.xml ||:
 
 ENV CATALINA_HOME=/usr/share/tomcat7 \
     CATALINA_BASE=/var/lib/tomcat7
