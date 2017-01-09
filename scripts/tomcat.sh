@@ -52,7 +52,7 @@ dockerfile_generate_run_cont() {
         | perl -0777 -pe 's/([ \t]*<!--\n?)(\s+<Connector port="8009"[^>]+>\n?)(\s+-->\n?)/\2/' \\
         | perl -0777 -pe 's/([ \t]*<!--\n?)(\s+<Listener className="org.apache.catalina.core.AprLifecycleListener"[^>]+>\n?)(\s+-->\n?)/\2/' \\
         > /etc/$tomcat_package/server.xml && \\
-    diff -u /etc/$tomcat_package/server.xml.orig /etc/$tomcat_package/server.xml ||:
+    (diff -u /etc/$tomcat_package/server.xml.orig /etc/$tomcat_package/server.xml ||:)
 
 ENV CATALINA_HOME=/usr/share/$tomcat_package \\
     CATALINA_BASE=/var/lib/$tomcat_package
