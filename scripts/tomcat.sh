@@ -64,7 +64,7 @@ EXPOSE 8009 8080
 LABEL name="Debian Base Image" \\
       vendor="Nantes Métropole"
 
-VOLUME \$CATALINA_BASE
+VOLUME /var/cache/$tomcat_package \$CATALINA_BASE /var/log/$tomcat_package
 
 CMD ["/usr/share/$tomcat_package/bin/catalina.sh", "run"]
 EOF
