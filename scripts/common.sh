@@ -17,7 +17,6 @@ set -e
 
 dockerfile_path=''
 dockerfile_from=''
-dockerfile_maintainer='Mathieu Parent <math.parent@gmail.com>'
 dockerfile_packages=''
 
 case $DIST in
@@ -48,7 +47,7 @@ dockerfile_generate_line() {
 
 dockerfile_generate() {
     local var
-    for var in path from maintainer packages; do
+    for var in path from packages; do
         if [ -z "$(eval echo  \$dockerfile_$var)" ]; then
             echo "ERROR: Mandatory variable is not defined: dockerfile_$var" >&2
             exit 1
@@ -57,8 +56,6 @@ dockerfile_generate() {
     mkdir -p "$(dirname "$dockerfile_path")"
     cat <<EOF > "$dockerfile_path"
 FROM $dockerfile_from
-
-MAINTAINER $dockerfile_maintainer
 
 RUN apt-get update && \\
     apt-get install -y \\

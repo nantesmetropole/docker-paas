@@ -1,7 +1,5 @@
 FROM nantesmetropole/debian:jessie
 
-MAINTAINER Mathieu Parent <math.parent@gmail.com>
-
 RUN apt-get update && \
     apt-get install -y \
         libtcnative-1 \
