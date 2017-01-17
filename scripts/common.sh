@@ -57,7 +57,11 @@ dockerfile_generate() {
     cat <<EOF > "$dockerfile_path"
 FROM $dockerfile_from
 
-RUN apt-get update && \\
+RUN \\
+EOF
+    dockerfile_generate_run_pre
+    cat <<EOF >> "$dockerfile_path"
+    apt-get update && \\
     apt-get install -y \\
 EOF
     for p in $(echo $dockerfile_packages | tr " " "\n" | sort) ; do
@@ -70,9 +74,13 @@ EOF
     fi
 }
 
+dockerfile_generate_run_pre() {
+   echo -n
+}
+
 dockerfile_generate_run_cont() {
    dockerfile_generate_line "        echo Done"
- }
+}
 
 dockerfile_generate_onbuild() {
     echo -n

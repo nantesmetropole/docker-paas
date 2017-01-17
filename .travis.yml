@@ -5,12 +5,18 @@ services:
 
 env:
     matrix:
-        - DIST=wheezy JAVA_VERSION=6 TOMCAT_VERSION=6
-        - DIST=wheezy JAVA_VERSION=6 TOMCAT_VERSION=7
-        - DIST=wheezy JAVA_VERSION=7 TOMCAT_VERSION=6
-        - DIST=jessie JAVA_VERSION=7 TOMCAT_VERSION=7
-        - DIST=jessie JAVA_VERSION=7 TOMCAT_VERSION=8
-        - DIST=stretch JAVA_VERSION=8 TOMCAT_VERSION=8.5
+        - SCRIPT=tomcat DIST=wheezy JAVA_VERSION=6 TOMCAT_VERSION=6
+        - SCRIPT=tomcat DIST=wheezy JAVA_VERSION=6 TOMCAT_VERSION=6 ONBUILD=yes
+        - SCRIPT=tomcat DIST=wheezy JAVA_VERSION=6 TOMCAT_VERSION=7
+        - SCRIPT=tomcat DIST=wheezy JAVA_VERSION=6 TOMCAT_VERSION=7 ONBUILD=yes
+        - SCRIPT=tomcat DIST=wheezy JAVA_VERSION=7 TOMCAT_VERSION=6
+        - SCRIPT=tomcat DIST=wheezy JAVA_VERSION=7 TOMCAT_VERSION=6 ONBUILD=yes
+        - SCRIPT=tomcat DIST=jessie JAVA_VERSION=7 TOMCAT_VERSION=7
+        - SCRIPT=tomcat DIST=jessie JAVA_VERSION=7 TOMCAT_VERSION=7 ONBUILD=yes
+        - SCRIPT=tomcat DIST=jessie JAVA_VERSION=7 TOMCAT_VERSION=8
+        - SCRIPT=tomcat DIST=jessie JAVA_VERSION=7 TOMCAT_VERSION=8 ONBUILD=yes
+        - SCRIPT=tomcat DIST=stretch JAVA_VERSION=8 TOMCAT_VERSION=8.5
+        - SCRIPT=tomcat DIST=stretch JAVA_VERSION=8 TOMCAT_VERSION=8.5 ONBUILD=yes
 
 script:
-    - ./build.sh tomcat
+    - ./build.sh $SCRIPT
