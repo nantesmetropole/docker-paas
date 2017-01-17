@@ -1,10 +1,10 @@
-FROM nantesmetropole/debian:jessie
+FROM nantesmetropole/debian:wheezy
 
 RUN \
     apt-get update && \
     apt-get install -y \
         libtcnative-1 \
-        openjdk-7-jre-headless \
+        openjdk-6-jre-headless \
         tomcat7 \
     && rm -rf /var/lib/apt/lists/* && \
     cp -a /etc/tomcat7/server.xml /etc/tomcat7/server.xml.orig && \

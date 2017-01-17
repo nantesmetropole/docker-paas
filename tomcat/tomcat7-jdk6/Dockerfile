@@ -1,10 +1,10 @@
-FROM nantesmetropole/debian:jessie
+FROM nantesmetropole/debian:wheezy
 
 RUN \
     apt-get update && \
     apt-get install -y \
         libtcnative-1 \
-        openjdk-7-jre-headless \
+        openjdk-6-jre-headless \
         tomcat7 \
     && rm -rf /var/lib/apt/lists/* && \
     cp -a /etc/tomcat7/server.xml /etc/tomcat7/server.xml.orig && \
@@ -27,6 +27,3 @@ LABEL name="Debian Base Image" \
 VOLUME /var/cache/tomcat7 $CATALINA_BASE /var/log/tomcat7
 
 CMD ["/usr/share/tomcat7/bin/catalina.sh", "run"]
-
-ONBUILD COPY *.war $CATALINA_BASE/webapps/
-ONBUILD COPY *.xml /etc/tomcat7/Catalina/localhost/

@@ -5,28 +5,28 @@ RUN \
     apt-get install -y \
         libtcnative-1 \
         openjdk-7-jre-headless \
-        tomcat7 \
+        tomcat8 \
     && rm -rf /var/lib/apt/lists/* && \
-    cp -a /etc/tomcat7/server.xml /etc/tomcat7/server.xml.orig && \
-    cat /etc/tomcat7/server.xml.orig \
+    cp -a /etc/tomcat8/server.xml /etc/tomcat8/server.xml.orig && \
+    cat /etc/tomcat8/server.xml.orig \
         | perl -0777 -pe 's/([ \t]*<!--\n?)(\s+<Connector port="8009"[^>]+>\n?)(\s+-->\n?)/\2/' \
         | perl -0777 -pe 's/([ \t]*<!--\n?)(\s+<Listener className="org.apache.catalina.core.AprLifecycleListener"[^>]+>\n?)(\s+-->\n?)/\2/' \
-        > /etc/tomcat7/server.xml && \
-    (diff -u /etc/tomcat7/server.xml.orig /etc/tomcat7/server.xml ||:)
+        > /etc/tomcat8/server.xml && \
+    (diff -u /etc/tomcat8/server.xml.orig /etc/tomcat8/server.xml ||:)
 
-ENV CATALINA_HOME=/usr/share/tomcat7 \
-    CATALINA_BASE=/var/lib/tomcat7
+ENV CATALINA_HOME=/usr/share/tomcat8 \
+    CATALINA_BASE=/var/lib/tomcat8
 
-USER tomcat7
+USER tomcat8
 
 EXPOSE 8009 8080
 
 LABEL name="Debian Base Image" \
       vendor="Nantes Métropole"
 
-VOLUME /var/cache/tomcat7 $CATALINA_BASE /var/log/tomcat7
+VOLUME /var/cache/tomcat8 $CATALINA_BASE /var/log/tomcat8
 
-CMD ["/usr/share/tomcat7/bin/catalina.sh", "run"]
+CMD ["/usr/share/tomcat8/bin/catalina.sh", "run"]
 
 ONBUILD COPY *.war $CATALINA_BASE/webapps/
-ONBUILD COPY *.xml /etc/tomcat7/Catalina/localhost/
+ONBUILD COPY *.xml /etc/tomcat8/Catalina/localhost/
