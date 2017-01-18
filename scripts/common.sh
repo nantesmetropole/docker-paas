@@ -60,7 +60,7 @@ FROM $dockerfile_from
 EOF
     dockerfile_generate_before_run
     cat <<EOF >> "$dockerfile_path"
-RUN \\
+RUN set -x && \\
 EOF
     dockerfile_generate_run_pre
     cat <<EOF >> "$dockerfile_path"

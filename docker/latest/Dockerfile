@@ -2,7 +2,7 @@ FROM nantesmetropole/debian:stretch
 
 COPY etc/ /etc/
 
-RUN \
+RUN set -x && \
     apt-get update && \
     apt-get install -y \
         apt-transport-https \

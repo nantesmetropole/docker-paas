@@ -1,6 +1,6 @@
 FROM nantesmetropole/debian:stretch
 
-RUN \
+RUN set -x && \
     apt-get update && \
     apt-get install -y \
         libtcnative-1 \
