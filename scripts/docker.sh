@@ -20,6 +20,7 @@ set -e
 docker_short=latest
 
 dockerfile_path=docker/$docker_short/Dockerfile
+docker_tag=nantesmetropole/docker:$docker_short
 
 dockerfile_generate_before_run() {
     cp -a templates/docker/etc "$(dirname "$dockerfile_path")/"

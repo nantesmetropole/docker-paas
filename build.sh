@@ -20,4 +20,9 @@ set -e
 if [ ! -f "$dockerfile_path" ]; then
     dockerfile_generate
 fi
-docker build "$(dirname "$dockerfile_path")"
+if [ -z "$docker_tag" ]; then
+    echo "ERROR: No tag specified" >&2
+    exit 1
+fi
+
+docker build -t "$docker_tag" "$(dirname "$dockerfile_path")"
