@@ -16,7 +16,7 @@
 set -e
 
 dockerfile_path=''
-dockerfile_from=''
+dockerfile_from=nantesmetropole/debian:$DIST
 dockerfile_packages=''
 
 case $DIST in
@@ -57,6 +57,9 @@ dockerfile_generate() {
     cat <<EOF > "$dockerfile_path"
 FROM $dockerfile_from
 
+EOF
+    dockerfile_generate_before_run
+    cat <<EOF >> "$dockerfile_path"
 RUN \\
 EOF
     dockerfile_generate_run_pre
@@ -72,6 +75,10 @@ EOF
     if [ -n "$onbuild_short" ]; then
         dockerfile_generate_onbuild
     fi
+}
+
+dockerfile_generate_before_run() {
+   echo -n
 }
 
 dockerfile_generate_run_pre() {

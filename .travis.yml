@@ -5,6 +5,7 @@ services:
 
 env:
     matrix:
+        - SCRIPT=docker DIST=stretch
         - SCRIPT=tomcat DIST=wheezy JAVA_VERSION=6 TOMCAT_VERSION=6
         - SCRIPT=tomcat DIST=wheezy JAVA_VERSION=6 TOMCAT_VERSION=6 ONBUILD=yes
         - SCRIPT=tomcat DIST=wheezy JAVA_VERSION=6 TOMCAT_VERSION=7
