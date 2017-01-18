@@ -43,7 +43,6 @@ tomcat_short="tomcat$TOMCAT_VERSION"
 dockerfile_packages="$dockerfile_packages libtcnative-1 $tomcat_package"
 
 dockerfile_path=tomcat/$tomcat_short-$java_short$onbuild_short/Dockerfile
-dockerfile_from=nantesmetropole/debian:$DIST
 
 dockerfile_generate_run_cont() {
     cat <<EOF >> "$dockerfile_path"
