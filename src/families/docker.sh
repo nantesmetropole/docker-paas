@@ -15,7 +15,7 @@
 
 set -e
 
-. "$PWD/scripts/common.sh"
+. "$PWD/src/families/common.sh"
 
 docker_short=latest
 

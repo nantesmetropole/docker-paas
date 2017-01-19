@@ -15,7 +15,7 @@
 
 set -e
 
-. "$PWD/scripts/common.sh"
+. "$PWD/src/families/common.sh"
 
 case $JAVA_VERSION in
     6)

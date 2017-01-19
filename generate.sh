@@ -15,6 +15,8 @@
 
 set -e
 
-. "$PWD/scripts/$1.sh"
+family="$1"
+
+. "$PWD/src/families/$family.sh"
 
 dockerfile_generate
