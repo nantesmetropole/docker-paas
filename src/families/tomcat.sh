@@ -15,7 +15,7 @@
 
 set -e
 
-. "$PWD/scripts/java.sh"
+. "$PWD/src/families/java.sh"
 
 case $TOMCAT_VERSION in
     6)
