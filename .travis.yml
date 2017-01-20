@@ -21,4 +21,10 @@ env:
         - SCRIPT=tomcat DIST=stretch JAVA_VERSION=8 TOMCAT_VERSION=8.5 ONBUILD=yes
 
 script:
+    - ./generate.sh $SCRIPT
     - ./build.sh $SCRIPT
+after_success:
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+    docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+    ./push.sh $SCRIPT;
+    fi
