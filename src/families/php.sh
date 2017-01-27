@@ -42,7 +42,7 @@ esac
 case $PHP_SAPI in
     apache2)
         php_package="apache2 libapache2-mod-$php_package"
-        php_port=80
+        php_port=8080
         php_cmd="[\"apache2-foreground\"]"
         ;;
     fpm)
@@ -73,6 +73,12 @@ EOF
 }
 
 dockerfile_generate_run_cont() {
+    if [ "$PHP_SAPI" = "apache2" ]; then
+        cat <<EOF >> "$dockerfile_path"
+    sed -i 's/^Listen 80$/Listen 8080/' /etc/apache2/ports.conf && \\
+    sed -i 's/^<VirtualHost \*:80>$/<VirtualHost *:8080>/' /etc/apache2/sites-available/*default* && \\
+EOF
+    fi
     cat <<EOF >> "$dockerfile_path"
     rm -v $conf_dir/*
 
