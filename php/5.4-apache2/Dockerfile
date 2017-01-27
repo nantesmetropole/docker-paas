@@ -1,5 +1,7 @@
 FROM nantesmetropole/debian:wheezy
 
+COPY apache2-foreground /usr/local/bin/
+
 RUN set -x && \
     apt-get update && \
     apt-get install -y \
@@ -14,4 +16,4 @@ EXPOSE 80
 
 WORKDIR /var/www/html
 
-CMD ["apache2", "-DFOREGROUND"]
+CMD ["apache2-foreground"]

@@ -43,7 +43,7 @@ case $PHP_SAPI in
     apache2)
         php_package="apache2 libapache2-mod-$php_package"
         php_port=80
-        php_cmd="[\"apache2\", \"-DFOREGROUND\"]"
+        php_cmd="[\"apache2-foreground\"]"
         ;;
     fpm)
         php_package="$php_package-$PHP_SAPI"
@@ -61,6 +61,16 @@ php_short="$PHP_VERSION-$PHP_SAPI"
 
 dockerfile_path=php/$php_short$onbuild_short/Dockerfile
 docker_tag=nantesmetropole/php:$php_short$onbuild_short
+
+dockerfile_generate_before_run() {
+    if [ "$PHP_SAPI" = "apache2" ]; then
+        cp -a templates/php/apache2-foreground "$(dirname "$dockerfile_path")/"
+        cat <<EOF >> "$dockerfile_path"
+COPY apache2-foreground /usr/local/bin/
+
+EOF
+    fi
+}
 
 dockerfile_generate_run_cont() {
     cat <<EOF >> "$dockerfile_path"
