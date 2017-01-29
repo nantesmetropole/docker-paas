@@ -6,7 +6,6 @@ services:
 env:
     matrix:
         - SCRIPT=docker DIST=stretch
-        - SCRIPT=docker-registry DIST=stretch
         - SCRIPT=php DIST=wheezy PHP_VERSION=5.4 PHP_SAPI=apache2
         - SCRIPT=php DIST=wheezy PHP_VERSION=5.4 PHP_SAPI=fpm
         - SCRIPT=php DIST=jessie PHP_VERSION=5.6 PHP_SAPI=apache2
