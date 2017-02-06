@@ -45,6 +45,11 @@ dockerfile_path=tomcat/$TOMCAT_VERSION-$java_short$onbuild_short/Dockerfile
 docker_tag=nantesmetropole/tomcat:$TOMCAT_VERSION-$java_short$onbuild_short
 
 dockerfile_generate_run_cont() {
+    if [ "$TOMCAT_VERSION" = 6 ]; then
+    cat <<EOF >> "$dockerfile_path"
+    cp -a /var/lib/tomcat6/webapps/ROOT/META-INF/context.xml /etc/tomcat6/Catalina/localhost/ROOT.xml && \\
+EOF
+    fi
     cat <<EOF >> "$dockerfile_path"
     cp -a /etc/$tomcat_package/server.xml /etc/$tomcat_package/server.xml.orig && \\
     cat /etc/$tomcat_package/server.xml.orig \\

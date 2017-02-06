@@ -7,6 +7,7 @@ RUN set -x && \
         openjdk-6-jre-headless \
         tomcat6 \
     && rm -rf /var/lib/apt/lists/* && \
+    cp -a /var/lib/tomcat6/webapps/ROOT/META-INF/context.xml /etc/tomcat6/Catalina/localhost/ROOT.xml && \
     cp -a /etc/tomcat6/server.xml /etc/tomcat6/server.xml.orig && \
     cat /etc/tomcat6/server.xml.orig \
         | perl -0777 -pe 's/([ \t]*<!--\n?)(\s+<Connector port="8009"[^>]+>\n?)(\s+-->\n?)/\2/' \
