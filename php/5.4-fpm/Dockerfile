@@ -13,4 +13,4 @@ EXPOSE 9000
 
 WORKDIR /var/www/html
 
-CMD ["php5-fpm"]
+CMD ["/usr/sbin/php5-fpm"]
