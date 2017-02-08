@@ -8,6 +8,8 @@ RUN set -x && \
         apache2 \
         libapache2-mod-php5 \
     && rm -rf /var/lib/apt/lists/* && \
+    sed -i 's@DocumentRoot /var/www$@DocumentRoot /var/www/html@' \
+        /etc/apache2/sites-available/* && \
     sed -i 's/^Listen 80$/Listen 8080/' /etc/apache2/ports.conf && \
     sed -i 's/^<VirtualHost \*:80>$/<VirtualHost *:8080>/' /etc/apache2/sites-available/*default* && \
     chgrp www-data /var/log/apache2 && \

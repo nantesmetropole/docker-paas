@@ -74,6 +74,12 @@ EOF
 
 dockerfile_generate_run_cont() {
     if [ "$PHP_SAPI" = "apache2" ]; then
+        if [ "$DIST" = "wheezy" ]; then
+            cat <<EOF >> "$dockerfile_path"
+    sed -i 's@DocumentRoot /var/www\$@DocumentRoot /var/www/html@' \\
+        /etc/apache2/sites-available/* && \\
+EOF
+        fi
         cat <<EOF >> "$dockerfile_path"
     sed -i 's/^Listen 80$/Listen 8080/' /etc/apache2/ports.conf && \\
     sed -i 's/^<VirtualHost \*:80>$/<VirtualHost *:8080>/' /etc/apache2/sites-available/*default* && \\
