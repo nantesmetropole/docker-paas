@@ -21,17 +21,23 @@ case $PHP_VERSION in
     5.4)
         php_dists="wheezy"
         php_package="php5"
+        fpm_bin="/usr/sbin/php5-fpm"
         conf_dir="/etc/php5/conf.d"
+        fpm_conf_dir="/etc/php5/fpm"
         ;;
     5.6)
         php_dists="jessie"
         php_package="php5"
+        fpm_bin="/usr/sbin/php5-fpm"
         conf_dir="/etc/php5/$PHP_SAPI/conf.d"
+        fpm_conf_dir="/etc/php5/fpm"
         ;;
     7.0)
         php_dists="stretch"
         php_package="php$PHP_VERSION"
+        fpm_bin="/usr/sbin/php-fpm$PHP_VERSION"
         conf_dir="/etc/php/$PHP_VERSION/$PHP_SAPI/conf.d"
+        fpm_conf_dir="/etc/php/$PHP_VERSION/fpm"
         ;;
     *)
         echo "ERROR: Mandatory variable is not correct: PHP_VERSION=$PHP_VERSION"
@@ -48,7 +54,7 @@ case $PHP_SAPI in
     fpm)
         php_package="$php_package-$PHP_SAPI"
         php_port=9000
-        php_cmd="[\"$php_package\"]"
+        php_cmd="[\"$fpm_bin\"]"
         ;;
     *)
         echo "ERROR: Mandatory variable is not correct: PHP_SAPI=$PHP_SAPI"
@@ -88,6 +94,17 @@ EOF
     ln -sfT /dev/stderr "/var/log/apache2/error.log"  && \\
     ln -sfT /dev/stdout "/var/log/apache2/access.log"  && \\
     ln -sfT /dev/stdout "/var/log/apache2/other_vhosts_access.log"  && \\
+EOF
+    elif [ "$PHP_SAPI" = "fpm" ]; then
+        cat <<EOF >> "$dockerfile_path"
+    sed -i -e 's/^;daemonize = yes/daemonize = no/' \\
+           -e 's@^error_log =.*@error_log = /proc/self/fd/2@' \\
+        $fpm_conf_dir/php-fpm.conf && \\
+    sed -i -e 's/^user =/;user =/' \\
+           -e 's/^group =/;group =/' \\
+           -e 's/^listen = .*/listen = 0.0.0.0:9000/' \\
+           -e 's/^clear_env = .*/clear_env = no/' \\
+        $fpm_conf_dir/pool.d/www.conf && \\
 EOF
     fi
     cat <<EOF >> "$dockerfile_path"
