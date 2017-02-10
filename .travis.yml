@@ -1,4 +1,6 @@
-language: generic
+language: ruby
+rvm:
+  - 2.3
 sudo: required
 services:
   - docker
@@ -28,6 +30,7 @@ env:
 script:
     - ./generate.sh $SCRIPT
     - ./build.sh $SCRIPT
+    - ./test.sh $SCRIPT
 after_success:
   - if [ "$TRAVIS_REPO_SLUG" = nantesmetropole/docker-paas -a "$TRAVIS_BRANCH" == "master" -a "$TRAVIS_PULL_REQUEST" = false ]; then
     docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
