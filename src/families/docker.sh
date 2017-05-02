@@ -36,8 +36,8 @@ dockerfile_generate_run_pre() {
     apt-get install -y \\
         apt-transport-https \\
         ca-certificates && \\
-    echo "deb https://apt.dockerproject.org/repo debian-$DIST main" > /etc/apt/sources.list.d/docker.list && \\
+    echo "deb https://download.docker.com/linux/debian $DIST stable" > /etc/apt/sources.list.d/docker.list && \\
 EOF
 }
 
-dockerfile_packages="$dockerfile_packages docker-engine"
+dockerfile_packages="$dockerfile_packages docker-ce"
