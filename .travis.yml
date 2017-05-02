@@ -14,6 +14,7 @@ env:
         - SCRIPT=php DIST=jessie PHP_VERSION=5.6 PHP_SAPI=fpm
         - SCRIPT=php DIST=stretch PHP_VERSION=7.0 PHP_SAPI=apache2
         - SCRIPT=php DIST=stretch PHP_VERSION=7.0 PHP_SAPI=fpm
+        - SCRIPT=ssh DIST=stretch
         - SCRIPT=tomcat DIST=wheezy JAVA_VERSION=6 TOMCAT_VERSION=6
         - SCRIPT=tomcat DIST=wheezy JAVA_VERSION=6 TOMCAT_VERSION=6 ONBUILD=yes
         - SCRIPT=tomcat DIST=wheezy JAVA_VERSION=6 TOMCAT_VERSION=7
