@@ -17,7 +17,7 @@ variables:
     - ./build.sh $SCRIPT
     - ./test.sh $SCRIPT
     - ./save.sh $SCRIPT
-    - if [ "$CI_COMMIT_REF_NAME" = 'master' -a "$CI_PROJECT_PATH" = 'nantes_docker/paas' ]; then echo Pushing...; docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY; ./push.sh $SCRIPT; fi
+    - if [ "$CI_BUILD_REF_NAME" = 'master' -a "$CI_PROJECT_PATH" = 'nantes_docker/paas' ]; then echo Pushing...; docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY; ./push.sh $SCRIPT; fi
   artifacts:
     name: "$CI_BUILD_NAME"
     paths:
