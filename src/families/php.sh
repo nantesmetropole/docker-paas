@@ -66,7 +66,11 @@ dockerfile_packages="$dockerfile_packages $php_package"
 php_short="$PHP_VERSION-$PHP_SAPI"
 
 dockerfile_path=php/$php_short$onbuild_short/Dockerfile
-docker_tag=nantesmetropole/php:$php_short$onbuild_short
+if [ -n "$CI_REGISTRY_IMAGE" ]; then
+    docker_tag="$(echo $CI_REGISTRY_IMAGE | sed s/paas/php/):$php_short$onbuild_short"
+else
+    docker_tag=nantesmetropole/php:$php_short$onbuild_short
+fi
 
 dockerfile_generate_before_run() {
     if [ "$PHP_SAPI" = "apache2" ]; then

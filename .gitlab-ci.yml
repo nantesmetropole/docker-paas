@@ -1,0 +1,87 @@
+variables:
+  DOCKER_HOST: 'docker'
+  DOCKER_URL: 'tcp://docker:2375'
+
+# anchor
+.allinone: &allinone
+  stage: build
+  tags:
+    - dind
+  script:
+    - JOB_NAME=( $CI_BUILD_NAME )
+    - export SCRIPT=${JOB_NAME[0]}
+    - export ${JOB_NAME[@]:1:99}
+    - apt-get update
+    - apt-get install -y ruby-docker-api ruby-rspec ruby-serverspec xz-utils
+    - ./generate.sh $SCRIPT
+    - ./build.sh $SCRIPT
+    - ./test.sh $SCRIPT
+    - ./save.sh $SCRIPT
+    - if [ "$CI_COMMIT_REF_NAME" = 'master' -a "$CI_PROJECT_PATH" = 'nantes_docker/paas' ]; then echo Pushing...; docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY; ./push.sh $SCRIPT; fi
+  artifacts:
+    name: "$CI_BUILD_NAME"
+    paths:
+      - ./*/*.tar.xz
+    expire_in: 1 year
+
+# Matrix
+# Waiting https://gitlab.com/gitlab-org/gitlab-ce/issues/19199
+docker DIST=stretch:
+  <<: *allinone
+
+php DIST=wheezy PHP_VERSION=5.4 PHP_SAPI=apache2:
+  <<: *allinone
+
+php DIST=wheezy PHP_VERSION=5.4 PHP_SAPI=fpm:
+  <<: *allinone
+
+php DIST=jessie PHP_VERSION=5.6 PHP_SAPI=apache2:
+  <<: *allinone
+
+php DIST=jessie PHP_VERSION=5.6 PHP_SAPI=fpm:
+  <<: *allinone
+
+php DIST=stretch PHP_VERSION=7.0 PHP_SAPI=apache2:
+  <<: *allinone
+
+php DIST=stretch PHP_VERSION=7.0 PHP_SAPI=fpm:
+  <<: *allinone
+
+ssh DIST=stretch:
+  <<: *allinone
+
+tomcat DIST=wheezy JAVA_VERSION=6 TOMCAT_VERSION=6:
+  <<: *allinone
+
+tomcat DIST=wheezy JAVA_VERSION=6 TOMCAT_VERSION=6 ONBUILD=yes:
+  <<: *allinone
+
+tomcat DIST=wheezy JAVA_VERSION=6 TOMCAT_VERSION=7:
+  <<: *allinone
+
+tomcat DIST=wheezy JAVA_VERSION=6 TOMCAT_VERSION=7 ONBUILD=yes:
+  <<: *allinone
+
+tomcat DIST=wheezy JAVA_VERSION=7 TOMCAT_VERSION=6:
+  <<: *allinone
+
+tomcat DIST=wheezy JAVA_VERSION=7 TOMCAT_VERSION=6 ONBUILD=yes:
+  <<: *allinone
+
+tomcat DIST=jessie JAVA_VERSION=7 TOMCAT_VERSION=7:
+  <<: *allinone
+
+tomcat DIST=jessie JAVA_VERSION=7 TOMCAT_VERSION=7 ONBUILD=yes:
+  <<: *allinone
+
+tomcat DIST=jessie JAVA_VERSION=7 TOMCAT_VERSION=8:
+  <<: *allinone
+
+tomcat DIST=jessie JAVA_VERSION=7 TOMCAT_VERSION=8 ONBUILD=yes:
+  <<: *allinone
+
+tomcat DIST=stretch JAVA_VERSION=8 TOMCAT_VERSION=8.5:
+  <<: *allinone
+
+tomcat DIST=stretch JAVA_VERSION=8 TOMCAT_VERSION=8.5 ONBUILD=yes:
+  <<: *allinone

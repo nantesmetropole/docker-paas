@@ -8,7 +8,11 @@ describe "php" do
     @php_version = ENV['PHP_VERSION'] or raise "Mandatory env: PHP_VERSION"
     @php_sapi = ENV['PHP_SAPI'] or raise "Mandatory env: PHP_SAPI"
 
-    @docker_image_tag = "nantesmetropole/php:#{@php_version}-#{@php_sapi}"
+    if not ENV['CI_REGISTRY_IMAGE'].to_s.empty?; then
+      @docker_image_tag = ENV['CI_REGISTRY_IMAGE'].sub(/paas$/, "php:#{@php_version}-#{@php_sapi}")
+    else
+      @docker_image_tag = "nantesmetropole/php:#{@php_version}-#{@php_sapi}"
+    end
     opts = {
       'Image'      => @docker_image_tag,
       'OpenStdin'  => true,
@@ -43,6 +47,10 @@ describe "php" do
     @container.delete
   end
 
+  let(:docker_host) do
+    ENV['DOCKER_HOST'] or 'localhost'
+  end
+
   let(:http_port) do
     @container.json['NetworkSettings']['Ports']['8080/tcp'][0]["HostPort"].to_i
   end
@@ -53,9 +61,9 @@ describe "php" do
 
   let(:uri) do
     if ENV['PHP_SAPI'] == 'apache2' then
-      URI("http://localhost:#{http_port}/test/")
+      URI("http://#{docker_host}:#{http_port}/test/")
     else
-      URI("fcgi://localhost:#{fpm_port}/test/")
+      URI("fcgi://#{docker_host}:#{fpm_port}/test/")
     end
   end
 
