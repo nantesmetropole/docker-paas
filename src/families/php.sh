@@ -67,7 +67,7 @@ php_short="$PHP_VERSION-$PHP_SAPI"
 
 dockerfile_path=php/$php_short$onbuild_short/Dockerfile
 if [ -n "$CI_REGISTRY_IMAGE" ]; then
-    docker_tag="$(echo $CI_REGISTRY_IMAGE | sed s/paas/php/):$php_short$onbuild_short"
+    docker_tag="$CI_REGISTRY_IMAGE:php$php_short$onbuild_short"
 else
     docker_tag=nantesmetropole/php:$php_short$onbuild_short
 fi

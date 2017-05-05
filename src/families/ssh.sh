@@ -21,7 +21,7 @@ ssh_short=latest
 
 dockerfile_path=ssh/$ssh_short/Dockerfile
 if [ -n "$CI_REGISTRY_IMAGE" ]; then
-    docker_tag="$(echo $CI_REGISTRY_IMAGE | sed s/paas/ssh/):$ssh_short"
+    docker_tag="$CI_REGISTRY_IMAGE:ssh-$ssh_short"
 else
     docker_tag=nantesmetropole/ssh:$ssh_short
 fi

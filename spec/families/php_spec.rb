@@ -9,7 +9,7 @@ describe "php" do
     @php_sapi = ENV['PHP_SAPI'] or raise "Mandatory env: PHP_SAPI"
 
     if not ENV['CI_REGISTRY_IMAGE'].to_s.empty?; then
-      @docker_image_tag = ENV['CI_REGISTRY_IMAGE'].sub(/paas$/, "php:#{@php_version}-#{@php_sapi}")
+      @docker_image_tag = ENV['CI_REGISTRY_IMAGE'] + ":php#{@php_version}-#{@php_sapi}"
     else
       @docker_image_tag = "nantesmetropole/php:#{@php_version}-#{@php_sapi}"
     end

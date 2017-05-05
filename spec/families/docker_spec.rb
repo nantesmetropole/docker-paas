@@ -3,7 +3,7 @@ require "spec_helper"
 describe "docker" do
   before(:all) do
     if not ENV['CI_REGISTRY_IMAGE'].to_s.empty?; then
-      @docker_image_tag = ENV['CI_REGISTRY_IMAGE'].sub(/paas$/, 'docker:latest')
+      @docker_image_tag = ENV['CI_REGISTRY_IMAGE'] + ':docker-latest'
     else
       @docker_image_tag = "nantesmetropole/docker:latest"
     end

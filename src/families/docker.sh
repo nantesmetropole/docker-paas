@@ -21,7 +21,7 @@ docker_short=latest
 
 dockerfile_path=docker/$docker_short/Dockerfile
 if [ -n "$CI_REGISTRY_IMAGE" ]; then
-    docker_tag="$(echo $CI_REGISTRY_IMAGE | sed s/paas/docker/):$docker_short"
+    docker_tag="$CI_REGISTRY_IMAGE:docker-$docker_short"
 else
     docker_tag=nantesmetropole/docker:$docker_short
 fi

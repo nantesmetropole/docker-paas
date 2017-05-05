@@ -3,7 +3,7 @@ require "spec_helper"
 describe "ssh" do
   before(:all) do
     if not ENV['CI_REGISTRY_IMAGE'].to_s.empty?; then
-      @docker_image_tag = ENV['CI_REGISTRY_IMAGE'].sub(/paas$/, 'ssh:latest')
+      @docker_image_tag = ENV['CI_REGISTRY_IMAGE'] + ':ssh-latest'
     else
       @docker_image_tag = "nantesmetropole/ssh:latest"
     end
