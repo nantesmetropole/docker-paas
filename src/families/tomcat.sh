@@ -43,7 +43,7 @@ dockerfile_packages="$dockerfile_packages libtcnative-1 $tomcat_package"
 
 dockerfile_path=tomcat/$TOMCAT_VERSION-$java_short$onbuild_short/Dockerfile
 if [ -n "$CI_REGISTRY_IMAGE" ]; then
-    docker_tag="$(echo $CI_REGISTRY_IMAGE | sed s/paas/tomcat/):$TOMCAT_VERSION-$java_short$onbuild_short"
+    docker_tag="$CI_REGISTRY_IMAGE:tomcat$TOMCAT_VERSION-$java_short$onbuild_short"
 else
     docker_tag=nantesmetropole/tomcat:$TOMCAT_VERSION-$java_short$onbuild_short
 fi
