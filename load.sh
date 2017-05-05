@@ -15,23 +15,14 @@
 
 set -e
 
-. "$PWD/src/families/common.sh"
+family="$1"
 
-ssh_short=latest
+. "$PWD/src/families/$family.sh"
 
-dockerfile_path=ssh/$ssh_short/Dockerfile
-if [ -n "$CI_REGISTRY_IMAGE" ]; then
-    docker_tag="$(echo $CI_REGISTRY_IMAGE | sed s/paas/ssh/):$ssh_short"
-else
-    docker_tag=nantesmetropole/ssh:$ssh_short
+dockerimage_path="$(echo "$dockerfile_path" | sed s@/Dockerfile@.tar.xz@)"
+
+if [ "$dockerimage_path" = "$dockerfile_path" ]; then
+  echo "ERROR: Unable to set dockerimage_path from dockerfile_path=$dockerfile_path"
+  exit 1
 fi
-
-dockerfile_packages="$dockerfile_packages openssh-client"
-
-dockerfile_generate_run_cont() {
-    cat <<EOF >> "$dockerfile_path"
-        echo Done
-
-USER nobody
-EOF
-}
+cat "$dockerimage_path" | unxz | docker load

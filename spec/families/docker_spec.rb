@@ -2,7 +2,11 @@ require "spec_helper"
 
 describe "docker" do
   before(:all) do
-    @docker_image_tag = "nantesmetropole/docker:latest"
+    if not ENV['CI_REGISTRY_IMAGE'].to_s.empty?; then
+      @docker_image_tag = ENV['CI_REGISTRY_IMAGE'].sub(/paas$/, 'docker:latest')
+    else
+      @docker_image_tag = "nantesmetropole/docker:latest"
+    end
     opts = {
       'Image'      => @docker_image_tag,
       'OpenStdin'  => true,

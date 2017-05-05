@@ -10,7 +10,11 @@ describe "tomcat" do
     @onbuild = ""
     @onbuild = "-onbuild" if ENV['ONBUILD'] == 'yes'
 
-    @docker_image_tag = "nantesmetropole/tomcat:#{@tomcat_version}-jdk#{@java_version}#{@onbuild}"
+    if not ENV['CI_REGISTRY_IMAGE'].to_s.empty?; then
+      @docker_image_tag = ENV['CI_REGISTRY_IMAGE'].sub(/paas$/, "tomcat:#{@tomcat_version}-jdk#{@java_version}#{@onbuild}")
+    else
+      @docker_image_tag = "nantesmetropole/tomcat:#{@tomcat_version}-jdk#{@java_version}#{@onbuild}"
+    end
     opts = {
       'Image'      => @docker_image_tag,
       'OpenStdin'  => true,
@@ -37,6 +41,10 @@ describe "tomcat" do
   after(:all) do
     @container.stop
     @container.delete
+  end
+
+  let(:docker_host) do
+    ENV['DOCKER_HOST'] or 'localhost'
   end
 
   let(:http_port) do
@@ -81,7 +89,7 @@ describe "tomcat" do
   # Remote tests
   it "should answer HTTP requests" do
     wait_server_started
-    uri = URI("http://localhost:#{http_port}/")
+    uri = URI("http://#{docker_host}:#{http_port}/")
 
     Net::HTTP.start(uri.host, uri.port) do |http|
        request = Net::HTTP::Get.new uri

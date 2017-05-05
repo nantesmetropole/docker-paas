@@ -16,7 +16,11 @@
 set -e
 
 dockerfile_path=''
-dockerfile_from=nantesmetropole/debian:$DIST
+if [ -n "$CI_REGISTRY_IMAGE" ]; then
+    dockerfile_from="$(echo $CI_REGISTRY_IMAGE | sed s/paas/debian/):$DIST"
+else
+    dockerfile_from=nantesmetropole/debian:$DIST
+fi
 dockerfile_packages=''
 
 case $DIST in
