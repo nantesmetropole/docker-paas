@@ -50,6 +50,9 @@ php DIST=stretch PHP_VERSION=7.0 PHP_SAPI=fpm:
 ssh DIST=stretch:
   <<: *allinone
 
+test DIST=stretch TEST_TARGET=puppet:
+  <<: *allinone
+
 tomcat DIST=wheezy JAVA_VERSION=6 TOMCAT_VERSION=6:
   <<: *allinone
 
