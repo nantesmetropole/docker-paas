@@ -36,7 +36,11 @@ describe "ssh" do
     expect(command('ssh').exit_status).to eq(255)
   end
 
-  it "user is nobody" do
-    expect(command('id -un').stdout.strip).to eq('nobody')
+  it "user is sshrelay" do
+    expect(command('id -un').stdout.strip).to eq('sshrelay')
+  end
+
+  it "user id is 1000" do
+    expect(command('id -u').stdout.strip).to eq('1000')
   end
 end
