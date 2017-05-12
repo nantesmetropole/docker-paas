@@ -30,8 +30,8 @@ dockerfile_packages="$dockerfile_packages openssh-client"
 
 dockerfile_generate_run_cont() {
     cat <<EOF >> "$dockerfile_path"
-        echo Done
+        adduser --disabled-login --gecos 'SSH relay' --uid 1000 sshrelay
 
-USER nobody
+USER sshrelay
 EOF
 }
