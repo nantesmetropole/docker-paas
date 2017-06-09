@@ -35,4 +35,8 @@ describe "test" do
   it "has rspec in PATH" do
     expect(command('rspec --version').exit_status).to eq(0)
   end
+
+  it "has octocatalog-diff in PATH" do
+    expect(command('octocatalog-diff --version').exit_status).to eq(0)
+  end
 end

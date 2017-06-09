@@ -10,9 +10,19 @@ module Docker_paas; module Family
       test_target
     end
 
+    def early_run
+      assert_env 'DIST', ['stretch']
+      super + [
+        # octocatalog-diff is not in stretch, take it from sid
+        'head -1 /etc/apt/sources.list | sed s/stretch/sid/ > /etc/apt/sources.list.d/sid.list &&',
+        "echo 'APT::Default-Release \"stretch\";' > /etc/apt/apt.conf.d/default-release &&",
+      ]
+    end
+
     def packages
       super + [
         'git',
+        'octocatalog-diff',
         'puppet-lint',
         'rgxg',
         'ruby-puppetlabs-spec-helper',
