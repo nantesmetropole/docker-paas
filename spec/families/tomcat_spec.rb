@@ -11,7 +11,7 @@ describe "tomcat" do
     @onbuild = "-onbuild" if ENV['ONBUILD'] == 'yes'
 
     if not ENV['CI_REGISTRY_IMAGE'].to_s.empty?; then
-      @docker_image_tag = ENV['CI_REGISTRY_IMAGE'] + ":tomcat#{@tomcat_version}-jdk#{@java_version}#{@onbuild}"
+      @docker_image_tag = ENV['CI_REGISTRY_IMAGE'] + ":tomcat-#{@tomcat_version}-jdk#{@java_version}#{@onbuild}"
     else
       @docker_image_tag = "nantesmetropole/tomcat:#{@tomcat_version}-jdk#{@java_version}#{@onbuild}"
     end

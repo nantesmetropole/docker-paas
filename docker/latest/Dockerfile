@@ -12,4 +12,4 @@ RUN set -x && \
     apt-get install -y \
         docker-ce \
     && rm -rf /var/lib/apt/lists/* && \
-        echo Done
+    echo Done

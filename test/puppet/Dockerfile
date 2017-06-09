@@ -6,10 +6,10 @@ RUN set -x && \
         git \
         puppet-lint \
         rgxg \
-        ruby-puppetlabs-spec-helper \
         ruby-puppet-syntax \
+        ruby-puppetlabs-spec-helper \
         ruby-rspec-puppet \
     && rm -rf /var/lib/apt/lists/* && \
-        echo Done
+    echo Done
 
 USER nobody

@@ -13,11 +13,11 @@ variables:
     - export ${JOB_NAME[@]:1:99}
     - apt-get update
     - apt-get install -y ruby-docker-api ruby-rspec ruby-serverspec xz-utils
-    - ./generate.sh $SCRIPT
-    - ./build.sh $SCRIPT
-    - ./test.sh $SCRIPT
-    - ./save.sh $SCRIPT
-    - if [ "$CI_BUILD_REF_NAME" = 'master' -a "$CI_PROJECT_PATH" = 'nantes_docker/paas' ]; then echo Pushing...; docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY; ./push.sh $SCRIPT; fi
+    - rake docker:generate[$SCRIPT]
+    - rake docker:build[$SCRIPT]
+    - rake docker:test[$SCRIPT]
+    - rake docker:save[$SCRIPT]
+    - if [ "$CI_BUILD_REF_NAME" = 'master' -a "$CI_PROJECT_PATH" = 'nantes_docker/paas' ]; then echo Pushing...; docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY; rake docker:push[$SCRIPT]; fi
   artifacts:
     name: "$CI_BUILD_NAME"
     paths:

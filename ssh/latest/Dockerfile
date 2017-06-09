@@ -5,6 +5,6 @@ RUN set -x && \
     apt-get install -y \
         openssh-client \
     && rm -rf /var/lib/apt/lists/* && \
-        adduser --disabled-login --gecos 'SSH relay' --uid 1000 sshrelay
+    adduser --disabled-login --gecos 'SSH relay' --uid 1000 sshrelay
 
 USER sshrelay

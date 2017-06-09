@@ -30,9 +30,9 @@ env:
         - SCRIPT=tomcat DIST=stretch JAVA_VERSION=8 TOMCAT_VERSION=8.5 ONBUILD=yes
 
 script:
-    - ./generate.sh $SCRIPT
-    - ./build.sh $SCRIPT
-    - ./test.sh $SCRIPT
+    - rake docker:generate[$SCRIPT]
+    - rake docker:build[$SCRIPT]
+    - rake docker:test[$SCRIPT]
 after_success:
   - if [ "$TRAVIS_REPO_SLUG" = nantesmetropole/docker-paas -a "$TRAVIS_BRANCH" == "master" -a "$TRAVIS_PULL_REQUEST" = false ]; then
     docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
