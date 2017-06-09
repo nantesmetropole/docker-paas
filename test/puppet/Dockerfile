@@ -8,6 +8,7 @@ RUN set -x && \
         git \
         octocatalog-diff \
         puppet-lint \
+        r10k \
         rgxg \
         ruby-puppet-syntax \
         ruby-puppetlabs-spec-helper \
