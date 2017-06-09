@@ -24,6 +24,7 @@ module Docker_paas; module Family
         'git',
         'octocatalog-diff',
         'puppet-lint',
+        'r10k',
         'rgxg',
         'ruby-puppetlabs-spec-helper',
         'ruby-puppet-syntax',
