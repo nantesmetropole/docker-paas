@@ -39,4 +39,8 @@ describe "test" do
   it "has octocatalog-diff in PATH" do
     expect(command('octocatalog-diff --version').exit_status).to eq(0)
   end
+
+  it "has r10k in PATH" do
+    expect(command('r10k version').exit_status).to eq(0)
+  end
 end
