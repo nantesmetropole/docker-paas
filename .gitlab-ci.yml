@@ -26,7 +26,10 @@ variables:
 
 # Matrix
 # Waiting https://gitlab.com/gitlab-org/gitlab-ce/issues/19199
-docker DIST=stretch:
+docker DIST=stretch DOCKER_MODE=dind:
+  <<: *allinone
+
+docker DIST=stretch DOCKER_MODE=latest:
   <<: *allinone
 
 php DIST=wheezy PHP_VERSION=5.4 PHP_SAPI=apache2:
