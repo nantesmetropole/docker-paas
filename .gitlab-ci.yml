@@ -1,6 +1,6 @@
 variables:
-  DOCKER_HOST: 'docker'
-  DOCKER_URL: 'tcp://docker:2375'
+  DOCKER_HOST: 'docker-registry.nantesmetropole.fr-nantes_docker-paas'
+  DOCKER_URL: 'tcp://docker-registry.nantesmetropole.fr-nantes_docker-paas:2375'
 
 # anchor
 .allinone: &allinone
