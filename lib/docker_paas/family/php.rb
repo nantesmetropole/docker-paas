@@ -121,11 +121,6 @@ module Docker_paas; module Family
         r += [
           "sed -i 's/^Listen 80$/Listen 8080/' /etc/apache2/ports.conf &&",
           "sed -i 's/^<VirtualHost \\*:80>$/<VirtualHost *:8080>/' /etc/apache2/sites-available/*default* &&",
-          'chgrp www-data /var/log/apache2 &&',
-          'chown www-data /var/run/apache2 &&',
-          'ln -sfT /dev/stderr "/var/log/apache2/error.log"  &&',
-          'ln -sfT /dev/stdout "/var/log/apache2/access.log"  &&',
-          'ln -sfT /dev/stdout "/var/log/apache2/other_vhosts_access.log"  &&',
         ]
       elsif php_sapi == 'fpm' then
         r += [

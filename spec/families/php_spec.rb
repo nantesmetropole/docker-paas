@@ -25,6 +25,7 @@ describe "php" do
           '/run/apache2'      => 'rw,noexec,nosuid,size=65536k,uid=33', # jessie|stretch+apache2 only ?
           '/run/lock/apache2' => 'rw,noexec,nosuid,size=65536k,uid=33', # jessie+apache2 only ?
           '/run/php'          => 'rw,noexec,nosuid,size=65536k,uid=33', # stretch+fpm only
+          '/var/log/apache2'  => 'rw,noexec,nosuid,size=65536k,uid=0', # apache2 only
         },
         'Binds'    => [
           "#{ENV['PWD']}/fixtures/php/phpinfo.php:/var/www/html/test/index.php:ro",
