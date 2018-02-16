@@ -53,7 +53,7 @@ describe "php" do
   end
 
   let(:http_port) do
-    @container.json['NetworkSettings']['Ports']['8080/tcp'][0]["HostPort"].to_i
+    @container.json['NetworkSettings']['Ports']['80/tcp'][0]["HostPort"].to_i
   end
 
   let(:fpm_port) do

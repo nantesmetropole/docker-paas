@@ -65,7 +65,7 @@ module Docker_paas; module Family
     def php_port
       case php_sapi
       when 'apache2'
-        8080
+        80
       when 'fpm'
         9000
       end
@@ -118,10 +118,6 @@ module Docker_paas; module Family
             "    /etc/apache2/sites-available/* &&",
           ]
         end
-        r += [
-          "sed -i 's/^Listen 80$/Listen 8080/' /etc/apache2/ports.conf &&",
-          "sed -i 's/^<VirtualHost \\*:80>$/<VirtualHost *:8080>/' /etc/apache2/sites-available/*default* &&",
-        ]
       elsif php_sapi == 'fpm' then
         r += [
           "sed -i -e 's/^;daemonize = yes/daemonize = no/'",

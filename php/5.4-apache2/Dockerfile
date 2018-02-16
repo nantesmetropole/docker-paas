@@ -10,13 +10,11 @@ RUN set -x && \
     && rm -rf /var/lib/apt/lists/* && \
     sed -i 's@DocumentRoot /var/www$@DocumentRoot /var/www/html@' \
         /etc/apache2/sites-available/* && \
-    sed -i 's/^Listen 80$/Listen 8080/' /etc/apache2/ports.conf && \
-    sed -i 's/^<VirtualHost \*:80>$/<VirtualHost *:8080>/' /etc/apache2/sites-available/*default* && \
     rm -v /etc/php5/conf.d/*
 
 USER www-data
 
-EXPOSE 8080
+EXPOSE 80
 
 WORKDIR /var/www/html
 
