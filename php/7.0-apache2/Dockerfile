@@ -10,8 +10,6 @@ RUN set -x && \
     && rm -rf /var/lib/apt/lists/* && \
     rm -v /etc/php/7.0/apache2/conf.d/*
 
-USER www-data
-
 EXPOSE 80
 
 WORKDIR /var/www/html

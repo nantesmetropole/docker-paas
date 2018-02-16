@@ -136,9 +136,14 @@ module Docker_paas; module Family
     end
 
     def after_run
-      [
-        'USER www-data',
-        '',
+      r = []
+      if php_sapi == 'fpm' then
+        r += [
+          'USER www-data',
+          '',
+        ]
+      end
+      r += [
         "EXPOSE #{php_port}",
         '',
         'WORKDIR /var/www/html',

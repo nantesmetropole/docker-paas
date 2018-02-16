@@ -12,8 +12,6 @@ RUN set -x && \
         /etc/apache2/sites-available/* && \
     rm -v /etc/php5/conf.d/*
 
-USER www-data
-
 EXPOSE 80
 
 WORKDIR /var/www/html
