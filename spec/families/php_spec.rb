@@ -63,16 +63,20 @@ describe "php" do
   let(:uri) do
     if ENV['PHP_SAPI'] == 'apache2' then
       URI("http://#{docker_host}:#{http_port}/test/")
-    else
+    elsif ENV['PHP_SAPI'] == 'fpm' then
       URI("fcgi://#{docker_host}:#{fpm_port}/test/")
+    else
+      raise "Mandatory variable is not correct: PHP_SAPI=#{ENV['PHP_SAPI']} (Possible values: [apache2, fpm])"
     end
   end
 
   let(:client_class) do
     if ENV['PHP_SAPI'] == 'apache2' then
       Net::HTTP
-    else
+    elsif ENV['PHP_SAPI'] == 'fpm' then
       Net::FastCGI
+    else
+      raise "Mandatory variable is not correct: PHP_SAPI=#{ENV['PHP_SAPI']} (Possible values: [apache2, fpm])"
     end
   end
 
